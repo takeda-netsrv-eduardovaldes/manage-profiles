@@ -1,0 +1,164 @@
+name: GitHub Actions - Manage Profiles
+on:
+
+####----------------------------------------------------------------------------
+  workflow_dispatch:
+    name: 'Manual Deployment'
+    description: 'Triggering Manual Deployment'
+    inputs:
+      github-personal-token:
+        description: 'GitHub Personal Token'
+        required: false
+        default: false
+      organization-admin:
+        description: 'Organization Administrator'
+        required: false
+        default: false
+      organization-name:
+        description: 'Organization Name/ID'
+        required: false
+        default: false
+      service-account-group:
+        description: 'Service Account Group'
+        required: false
+        default: false
+      service-account-user:
+        description: 'Service Account User'
+        required: false
+        default: false
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Manage Profiles'
+####----------------------------------------------------------------------------
+  push:
+    branches: [ master ]
+    paths:
+      - action.yaml
+####----------------------------------------------------------------------------
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_DEFAULT_ACCOUNT: ${{ secrets.AWS_DEFAULT_ACCOUNT }}
+  AWS_DEFAULT_PROFILE: ${{ secrets.AWS_DEFAULT_PROFILE }}
+  AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  ## Terraform Operations: Deploy, Destroy
+  BACKUP_TERRAFORM: ${{ secrets.BACKUP_TERRAFORM }}
+  DEPLOY_TERRAFORM: ${{ secrets.DEPLOY_TERRAFORM }}
+  DESTROY_TERRAFORM: ${{ secrets.DESTROY_TERRAFORM }}
+  ## DEVOPS_ASSUMEROLE_POLICY:  ## DevOps--Assume-Role.Policy
+  ## DEVOPS_BOUNDARIES_POLICY:  ## Devops--Permission-Boundaries.Policy
+  ## DEVOPS_ACCESS_POLICY:  ## DevOps--Custom-Access.Policy
+  DEVOPS_ACCESS_ROLE: ${{ secrets.DEVOPS_ACCESS_ROLE }}  ## DevOps--Custom-Access.Role
+  DEVOPS_ACCOUNT_NAME: ${{ secrets.DEVOPS_ACCOUNT_NAME }}
+  DYNAMODB_DEFAULT_REGION: ${{ secrets.DYNAMODB_DEFAULT_REGION }}
+  ## INSPECT_DEPLOYMENT
+  ## Manage Profiles variables
+  GITHUB_PERSONAL_TOKEN: ${{ secrets.GITHUB_PERSONAL_TOKEN }}
+  ## Target GitHub Account/Repository
+  GITHUB_ORGANIZATION_NAME: emvaldes
+  GITHUB_ORGANIZATION_REPO: manage-profiles
+  ## Organization Credentials:
+  ORGANIZATION_ADMIN: default
+  ORGANIZATION_NAME: anonymous
+  PRIVATE_KEYPAIR_FILE: ${{ secrets.PRIVATE_KEYPAIR_FILE }}
+  PRIVATE_KEYPAIR_NAME: ${{ secrets.PRIVATE_KEYPAIR_NAME }}
+  PRIVATE_KEYPAIR_SECRET: ${{ secrets.PRIVATE_KEYPAIR_SECRET }}
+  PROVISION_TERRAFORM: ${{ secrets.PROVISION_TERRAFORM }}
+  ## AWS IAM Group/User credentials-set
+  SERVICE_ACCOUNT_GROUP: devops
+  SERVICE_ACCOUNT_USER: devops
+  TARGET_WORKSPACE: ${{ secrets.TARGET_WORKSPACE }}
+  UPDATE_PYTHON_LATEST: ${{ secrets.UPDATE_PYTHON_LATEST }}
+  UPDATE_SYSTEM_LATEST: ${{ secrets.UPDATE_SYSTEM_LATEST }}
+####----------------------------------------------------------------------------
+jobs:
+  manage-profiles:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+####----------------------------------------------------------------------------
+      ## Environment Variables
+      - name: Environment Variables
+        id: environment-variables
+        run: |
+          ####------------------------------------------------------------------
+          ## Parsing GitHub Action - Workflow dispatch (limited to 10 input-params)
+          echo -e "Processing File|Input-based Parameters ... [ 1-10 ]\n" ;
+          ####------------------------------------------------------------------
+          eval "echo '::set-env name=SESSION_TIMESTAMP::$(date +"%y%m%d%H%M%S")'" ;
+          echo '::set-env name=AWS_ACCESS_KEY_ID::${{ secrets.AWS_ACCESS_KEY_ID }}'
+          echo '::set-env name=AWS_SECRET_ACCESS_KEY::${{ secrets.AWS_SECRET_ACCESS_KEY }}'
+####----------------------------------------------------------------------------
+      ## System Requirements
+      - name: System Requirements
+        uses: emvaldes/system-requirements@master
+        id: system-requirements
+        with:
+          install-awscli-tool: true
+          install-custom-tools: 'netcat'
+          install-default-tools: true
+          install-terraform-cli: latest
+          update-operating-system: ${UPDATE_SYSTEM_LATEST}
+          update-python-version: ${UPDATE_PYTHON_LATEST}
+        continue-on-error: false
+####----------------------------------------------------------------------------
+      ## Installed Packages
+      - name: Installed Packages
+        id: installed-packages
+        shell: bash
+        run: |
+          jq --version;
+          tree --version;
+          python --version;
+          aws --version;
+####----------------------------------------------------------------------------
+      ## Requesting Credentials
+      - name: Requesting Credentials
+        uses: emvaldes/generate-credentials@master
+        id: request-credentials
+        with:
+          aws-access-key-id: ${AWS_ACCESS_KEY_ID}
+          aws-default-account: ${AWS_DEFAULT_ACCOUNT}
+          aws-default-profile: ${AWS_DEFAULT_PROFILE}
+          aws-default-region: ${AWS_DEFAULT_REGION}
+          aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
+          devops-access-role: ${DEVOPS_ACCESS_ROLE}
+          devops-account-name: ${DEVOPS_ACCOUNT_NAME}
+          session-timestamp: "TerraformPipeline--${SESSION_TIMESTAMP}"
+        continue-on-error: false
+# ####----------------------------------------------------------------------------
+#       ## Privision Access KeyPair
+#       - name: Provisioning Access
+#         uses: emvaldes/manage-profiles@master
+#         id: manage-profiles
+#         with:
+#           assume-role-policy: ${ASSUME_ROLE_POLICY}
+#           boundaries-policy: ${BOUNDARIES_POLICY}
+#           custom-access-policy: ${CUSTOM_ACCESS_POLICY}
+#           custom-access-role: ${CUSTOM_ACCESS_ROLE}
+#           github-organization-name: ${GITHUB_ORGANIZATION_NAME}
+#           github-organization-repo: ${GITHUB_ORGANIZATION_REPO}
+#           github-personal-token: ${GITHUB_PERSONAL_TOKEN}
+#           organization-admin: ${ORGANIZATION_ADMIN}
+#           organization-name: ${ORGANIZATION_NAME}
+#           private-keypair-file: ${PRIVATE_KEYPAIR_FILE}
+#           public-keypair-file: ${PUBLIC_KEYPAIR_FILE}
+#           service-account-group: ${SERVICE_ACCOUNT_GROUP}
+#           service-account-user: ${SERVICE_ACCOUNT_USER}
+#         continue-on-error: false
+#       - name: Check On Failures
+#         if: steps.provision-access.outputs.status == 'failure'
+#         run: |
+#           echo -e "Warning: Provisioning Access Failed [Status]: ${{ steps.provision-access.outputs.status }}" ;
+# ####----------------------------------------------------------------------------
+#       ## Display Environment
+#       - name: Display Environment
+#         id: display_environment
+#         run: |
+#           echo -e "\nDisplaying Enviroment Settings ...\n" ;
+#           echo -e "GitHub Personal Token: ${GITHUB_PERSONAL_TOKEN}" ;
+# ####----------------------------------------------------------------------------

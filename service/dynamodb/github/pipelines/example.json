@@ -1,0 +1,29 @@
+{
+  "shaindex": {
+    "S": "1234567890476bab7ecbe8d64e8e7f817199e442"
+  },
+  "repository": {
+    "S": "terraform-controller"
+  },
+  "datetime": {
+    "S": "200910131419"
+  },
+  "author": {
+    "S": "valdes,eduardo"
+  },
+  "branch": {
+    "S": "master"
+  },
+  "contact": {
+    "S": "emvaldes@hotmail.com"
+  },
+  "organization": {
+    "S": "emvaldes"
+  },
+  "release": {
+    "BOOL": false
+  },
+  "version": {
+    "S": "v1.0"
+  }
+}

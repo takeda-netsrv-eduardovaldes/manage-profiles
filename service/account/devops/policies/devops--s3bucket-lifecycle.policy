@@ -1,0 +1,38 @@
+{
+  "Rules": [
+    {
+      "Status": "Enabled",
+      "NoncurrentVersionExpiration": {
+        "NoncurrentDays": {{ console.NoncurrentVersionExpiration }}
+      },
+      "NoncurrentVersionTransitions": [
+        {
+          "NoncurrentDays": {{ console.NoncurrentVersionTransitions_StandardIA }},
+          "StorageClass": "STANDARD_IA"
+        },
+        {
+          "NoncurrentDays": {{ console.NoncurrentVersionTransitions_Glacier }},
+          "StorageClass": "GLACIER"
+        }
+      ],
+      "Prefix": "{{ console.RulesPrefix }}",
+      "Expiration": {
+        "Days": {{ console.RulesExpiration }}
+      },
+      "AbortIncompleteMultipartUpload": {
+        "DaysAfterInitiation": {{ console.AbortIncompleteMultipartUpload }}
+      },
+      "Transitions": [
+        {
+          "Days": {{ console.Transitions_StandardIA }},
+          "StorageClass": "STANDARD_IA"
+        },
+        {
+          "Days": {{ console.Transitions_Glacier }},
+          "StorageClass": "GLACIER"
+        }
+      ],
+      "ID": "{{ console.S3Bucket_Name }}"
+    }
+  ]
+}

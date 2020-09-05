@@ -1,0 +1,29 @@
+{
+  "shaindex": {
+    "S": "{{ console.Repo_SHAIndex }}"
+  },
+  "repository": {
+    "S": "{{ console.Repository }}"
+  },
+  "datetime": {
+    "S": "{{ console.Date_Time }}"
+  },
+  "author": {
+    "S": "{{ console.Author_Name }}"
+  },
+  "branch": {
+    "S": "{{ console.Repo_Branch }}"
+  },
+  "contact": {
+    "S": "{{ console.Author_Contact }}"
+  },
+  "organization": {
+    "S": "{{ console.Organization }}"
+  },
+  "release": {
+    "BOOL": false
+  },
+  "version": {
+    "S": "{{ console.Repo_Version }}"
+  }
+}

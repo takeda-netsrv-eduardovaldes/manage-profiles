@@ -1,0 +1,109 @@
+{
+  "datetime": {
+    "S": "20/09/10/131419"
+  },
+  "configs": {
+    "L": [
+      {
+        "S": "configs/dev-configs.tfvars"
+      }
+    ]
+  },
+  "environment": {
+    "M": {
+      "description": {
+        "S": "development"
+      },
+      "target": {
+        "S": "dev"
+      }
+    }
+  },
+  "identity": {
+    "M": {
+      "access": {
+        "S": "DevOps--Custom-Access.Role"
+      },
+      "account": {
+        "N": "123456789012"
+      },
+      "profile": {
+        "S": "terraform"
+      },
+      "userid": {
+        "S": "AROA2XV4BKOYCABUKCHMK:DevOpsPipeline-20200904114109"
+      }
+    }
+  },
+  "outputs": {
+    "L": [
+      {
+        "S": "aws_elb_public_dns=dev-nginx-elb-16931-1568224999.us-east-1.elb.amazonaws.com"
+      },
+      {
+        "S": "cname_record_url=http://terraform-controller.emvaldes.name"
+      },
+      {
+        "S": "devops_contact=Updated - emvaldes@yahoo.com"
+      },
+      {
+        "S": "devops_engineer=Updated - DevOps Team"
+      },
+      {
+        "S": "devops_listset=Updated - Proving Nothing"
+      },
+      {
+        "S": "devops_mapset=Updated - Testing Something"
+      },
+      {
+        "S": "devops_timestamp=Updated - Today Is A Good Day To ..."
+      },
+      {
+        "S": "filebased_parameters=Updated - Development Parameters loaded from a custom parameter file"
+      },
+      {
+        "S": "resources_index=18912"
+      }
+    ]
+  },
+  "pipeline": {
+    "S": "prototypes"
+  },
+  "repository": {
+    "S": "terraform-controller"
+  },
+  "shaindex": {
+    "S": "1234567890476bab7ecbe8d64e8e7f817199e442"
+  },
+  "variables": {
+    "L": [
+      {
+        "S": "aws_access_key=ASIA2XV4BKOYJTCECX7S"
+      },
+      {
+        "S": "aws_secret_key=wZ1MRPln03n/710b7HXZmJLPyNkPCRe49mWoIwNc"
+      },
+      {
+        "S": "devops_contact=emvaldes@hotmail.com"
+      },
+      {
+        "S": "devops_engineer=Eduardo Valdes"
+      },
+      {
+        "S": "devops_timestamp=200904045239"
+      },
+      {
+        "S": "private_keypair_file=.ssh/id_rsa"
+      },
+      {
+        "S": "private_keypair_name=terraform"
+      },
+      {
+        "S": "region=us-east-1"
+      },
+      {
+        "S": "route53_record=terraform-awscloud"
+      }
+    ]
+  }
+}

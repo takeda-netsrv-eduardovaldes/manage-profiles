@@ -1,0 +1,8 @@
+{
+    "Version": "2012-10-17",
+    "Statement": {
+        "Effect": "Allow",
+        "Action": "sts:AssumeRole",
+        "Resource": "arn:aws:iam::{{ console.AWS_Account }}:role/{{ console.Access_Role }}"
+    }
+}

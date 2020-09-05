@@ -1,0 +1,15 @@
+{
+  "Version": "2012-10-17",
+  "Id": "PolicyS3Bucket",
+  "Statement": [
+      {
+          "Sid": "StmtS3Bucket",
+          "Effect": "Allow",
+          "Principal": {
+              "AWS": "arn:aws:iam::{{ console.AWS_Account }}:user/{{ console.User_Name }}"
+          },
+          "Action": "s3:*",
+          "Resource": "arn:aws:s3:::{{ console.S3Bucket_Name }}/*"
+      }
+  ]
+}

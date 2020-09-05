@@ -1,0 +1,191 @@
+#!/bin/bash
+
+## Please, execute these commands first:
+## export PATH="${PATH}:${HOME}/bin" && mkdir -p ${HOME}/bin && wget --quiet --output-document=${HOME}/bin/manage-profiles.shell https://raw.githubusercontent.com/emvaldes/manage-profiles/master/manage-profiles.shell && chmod 0754 ${HOME}/bin/manage-profiles.shell && ls -al ${HOME}/bin/manage-profiles.shell ;
+
+## source ${HOME}/.bash.functions;
+## script_name=$(basename ${0});
+
+## System/Profile container(s):
+
+usr_local="${HOME}"; mkdir -p ${usr_local};
+local_bin="${usr_local}/bin"; mkdir -p ${local_bin};
+local_etc="${usr_local}/etc"; mkdir -p ${local_etc};
+local_tmp="/tmp"; mkdir -p ${local_tmp};
+
+## =============================================================================
+## Warning: Modify these to reflect your admin-user credentials
+##          ~/.aws/credentials
+## [ default--controller ]
+## aws_access_key_id = AKIA****************
+## aws_secret_access_key = ****************************************
+## =============================================================================
+export profile_name='default';
+export profile_account='controller';
+
+## =============================================================================
+## Warning: Midify these to reflect your target GROUP and Service-Account
+##          IAM Group = devops
+##          Service-Account = devops
+## =============================================================================
+export group_name='devops';
+export user_name='devops';
+
+## =============================================================================
+## Warning: Modify these values to reflect your Organization
+##          GitHub User = <organization> e.g.: emvaldes
+##          GitHub Repo = <repository>   e.g.: manage-profiles
+## =============================================================================
+export github_user='emvaldes';
+export github_repo='manage-profiles';
+
+## =============================================================================
+## Warning: Modify these values to reflect your Private/Public Access Keys
+##          Private Key = ~/.ssh/id_rsa
+##           Public Key = ~/.ssh/id_rsa.pub
+## =============================================================================
+export private_sshkey=${HOME}/.ssh/domains/${profile_name}/private/${profile_name} ;
+export public_sshkey=${HOME}/.ssh/domains/${profile_name}/public/${profile_name}.pub ;
+
+## =============================================================================
+## Warning: Modify these values to reflect your AWS STS Configurations
+## =============================================================================
+export access_policy='DevOps--Custom-Access.Policy';
+export access_role='DevOps--Custom-Access.Role';
+export assume_policy='DevOps--Assume-Role.Policy';
+export custom_boundary='Devops--Permission-Boundaries.Policy';
+
+## =============================================================================
+## Warning: Modify this variable only if your "access-policy" is different
+## =============================================================================
+export DEVOPS_ACCESS_ROLE="${access_role}";
+
+function manage_profiles () {
+    github_personal_token="${1}";
+    if [[ ${#github_personal_token} -eq 0 ]]; then
+    #   echo -e; read -p "GitHub Personal Token: " response;
+    #   if [[ ${#response} -eq 0 ]]; then
+              github_personal_token="$(cat ${HOME}/.github.token)";
+              echo -e "\nWarning: Loading GitHub Personal Token (file-based)! \n";
+    #     else  export github_personal_token=${response};
+    #   fi;
+    fi;
+    ## echo -e "\nGitHub Personal Token: ${github_personal_token}";
+    github_usercontent="https://raw.githubusercontent.com/emvaldes";
+    case "${OSTYPE}" in
+      darwin* ) echo -e;
+                python_version="$(python --version | sed -e 's|^\(.*\)\([[:space:]]\)\(3\)\(.*\)$|\3|g')";
+                ## echo -e "Python Version: ${python_version}";
+                if [[ ${python_version} -ne 3 ]]; then
+                        echo -e "\nWarning: Incorrect Environment! ";
+                        echo -e "         Please, follow these instructions:\n\n";
+                        declare -a instructions=();
+                        instructions+=("01 -> ! [[ \$(echo \${PATH} | egrep \${HOME}/bin) ]] && { mkdir -p \${HOME}/bin; export PATH=\"\${PATH}:\${HOME}/bin\"; }; \n");
+                        instructions+=("02 -> export github_secrets=\"github-secrets.py\" ;");
+                        instructions+=("03 -> wget --quiet --output-document=\${HOME}/bin/github-secrets.py ${github_usercontent}/manage-profiles/master/github-secrets.py ;");
+                        instructions+=("04 -> chmod 0754 \${HOME}/bin/github-secrets.py ;");
+                        instructions+=("05 -> ls -al \${HOME}/bin/github-secrets.py ;\n");
+                        instructions+=("06 -> alias python='python3' ;");
+                        instructions+=("07 -> python --version ;");
+                        instructions+=("08 -> pip --version ;\n");
+                        instructions+=("09 -> pip install virtualenv ;");
+                        instructions+=("10 -> export PATH=\"\${PATH}:\${HOME}/Library/Python/2.7/bin\" ;\n");
+                        instructions+=("11 -> mkdir -p /tmp/.virtualenv ;");
+                        instructions+=("12 -> virtualenv /tmp/.virtualenv/python3 ;");
+                        instructions+=("13 -> source /tmp/.virtualenv/python3/bin/activate ;\n");
+                        instructions+=("14 -> python --version ;");
+                        instructions+=("15 -> python -m pip install pynacl ;\n");
+                        instructions+=("16 -> source \${HOME}/bin/manage-profiles.shell ;");
+                        instructions+=("17 -> manage-profiles \$(cat \${HOME}/.github.token);\n");
+                        oIFS="${IFS}"; IFS=$'\n' ;
+                        for xline in ${instructions[@]}; do echo -e "${xline}"; done;
+                        IFS="${oIFS}" ;
+                        sleep 5; return 1;
+                  else  ## Enforcing the VirtualEnv for Python 3.x
+                        source /tmp/.virtualenv/python3/bin/activate ;
+                        python --version ;
+                fi;
+               ;;
+           * ) echo -e "Warning: Make sure you have Python 3 + VirtualEnv + PyNacl ! \n";
+               sleep 5;
+               ;;
+    esac;
+    ## DevOps Modules (GitHub Repository)
+    export devops_tools='emvaldes/devops-tools';
+    ## Required modules (zero-conf execution)
+    declare -a functions=(
+        devops-account
+        devops-awscli
+        devops-github
+        devops-tools
+        devops-polices
+        devops-services
+      );
+    ## Enforcing random-placeholders:
+    container="/tmp/import--$(LC_CTYPE=C tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c32)";
+    mkdir -p ${container};
+    ## Root-Path for these required modules:
+    source_tools="https://raw.githubusercontent.com/${devops_tools}/master";
+    echo -e;
+    for xfile in ${functions[@]}; do
+      random_index="$(LC_CTYPE=C tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c32)";
+      for xitem in functions variables; do
+        master_file="${source_tools}/${xitem}/${xfile}.${xitem}";
+        source_file="${container}/source--${random_index}.${xitem}";
+        wget --quiet --output-document=${source_file} ${master_file};
+        echo -e "Source: ${source_file}";
+        source ${source_file};
+      done;
+    done;
+    rm -rf ${container};
+    ## Basic (skeleton) Shell-command to execute:
+    configure_account \
+        --profile-name=${profile_name} \
+        --profile-account=${profile_account} \
+        --create-secrets=true \
+        --deploy-keypair=true \
+        --github-repo=${github_repo} \
+        --github-user=${github_user} \
+        --private-sshkey=${private_sshkey} \
+        --public-sshkey=${public_sshkey} \
+        --user-name=${user_name} \
+      ;
+    return 0;
+  }; alias manage-profiles='manage_profiles';
+
+## manage_profiles "${@}";
+
+# DEPRECATION: Python 2.7 reached the end of its life on January 1st, 2020. Please upgrade your Python as Python 2.7 is no longer maintained. A future version of pip will drop support for Python 2.7. More details about Python 2 support in pip, can be found at https://pip.pypa.io/en/latest/development/release-process/#python-2-support
+# Defaulting to user installation because normal site-packages is not writeable
+# Collecting virtualenv
+#   Downloading virtualenv-20.0.31-py2.py3-none-any.whl (4.9 MB)
+#      |████████████████████████████████| 4.9 MB 3.2 MB/s
+# Requirement already satisfied: importlib-metadata<2,>=0.12; python_version < "3.8" in /Library/Python/2.7/site-packages (from virtualenv) (1.7.0)
+# Requirement already satisfied: importlib-resources>=1.0; python_version < "3.7" in /Library/Python/2.7/site-packages (from virtualenv) (3.0.0)
+# Requirement already satisfied: distlib<1,>=0.3.1 in /Library/Python/2.7/site-packages (from virtualenv) (0.3.1)
+# Requirement already satisfied: filelock<4,>=3.0.0 in /Library/Python/2.7/site-packages (from virtualenv) (3.0.12)
+# Requirement already satisfied: appdirs<2,>=1.4.3 in /Library/Python/2.7/site-packages (from virtualenv) (1.4.4)
+# Requirement already satisfied: pathlib2<3,>=2.3.3; python_version < "3.4" and sys_platform != "win32" in /Library/Python/2.7/site-packages (from virtualenv) (2.3.5)
+# Requirement already satisfied: six<2,>=1.9.0 in /System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python (from virtualenv) (1.12.0)
+# Requirement already satisfied: configparser>=3.5; python_version < "3" in /Library/Python/2.7/site-packages (from importlib-metadata<2,>=0.12; python_version < "3.8"->virtualenv) (4.0.2)
+# Requirement already satisfied: zipp>=0.5 in /Library/Python/2.7/site-packages (from importlib-metadata<2,>=0.12; python_version < "3.8"->virtualenv) (1.2.0)
+# Requirement already satisfied: contextlib2; python_version < "3" in /Library/Python/2.7/site-packages (from importlib-metadata<2,>=0.12; python_version < "3.8"->virtualenv) (0.6.0.post1)
+# Requirement already satisfied: typing; python_version < "3.5" in /Library/Python/2.7/site-packages (from importlib-resources>=1.0; python_version < "3.7"->virtualenv) (3.7.4.3)
+# Requirement already satisfied: singledispatch; python_version < "3.4" in /Library/Python/2.7/site-packages (from importlib-resources>=1.0; python_version < "3.7"->virtualenv) (3.4.0.3)
+# Requirement already satisfied: scandir; python_version < "3.5" in /Library/Python/2.7/site-packages (from pathlib2<3,>=2.3.3; python_version < "3.4" and sys_platform != "win32"->virtualenv) (1.10.0)
+# Installing collected packages: virtualenv
+#   WARNING: The script virtualenv is installed in '/Users/emvaldes/Library/Python/2.7/bin' which is not on PATH.
+#   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+# Successfully installed virtualenv-20.0.31
+
+# created virtual environment CPython2.7.16.final.0-64 in 392ms
+#   creator CPython2macOsFramework(dest=/Users/emvaldes/.virtualenv/python3, clear=False, global=False)
+#   seeder FromAppData(download=False, pip=bundle, wheel=bundle, setuptools=bundle, via=copy, app_data_dir=/Users/emvaldes/Library/Application Support/virtualenv)
+#     added seed packages: pip==20.2.2, setuptools==44.1.1, wheel==0.35.1
+#   activators PythonActivator,CShellActivator,FishActivator,PowerShellActivator,BashActivator
+
+# (python3) emvaldes-macbookpro:python3 emvaldes$ python -m pip install pynacl ;
+# Requirement already satisfied: pynacl in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (1.4.0)
+# Requirement already satisfied: cffi>=1.4.1 in /Users/emvaldes/Library/Python/3.8/lib/python/site-packages (from pynacl) (1.13.2)
+# Requirement already satisfied: six in /Users/emvaldes/Library/Python/3.8/lib/python/site-packages (from pynacl) (1.14.0)
+# Requirement already satisfied: pycparser in /Users/emvaldes/Library/Python/3.8/lib/python/site-packages (from cffi>=1.4.1->pynacl) (2.19)

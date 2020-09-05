@@ -1,0 +1,746 @@
+
+$ python --version ;
+Python 2.7.16
+
+$ source ~/bin/manage-profiles.shell ;
+$ manage-profiles $(cat ~/.github.token);
+
+Python 2.7.16
+
+Warning: Incorrect Environment!
+         Please, follow these instructions:
+
+
+01 -> ! [[ $(echo ${PATH} | egrep ${HOME}/bin) ]] && { mkdir -p ${HOME}/bin; export PATH="${PATH}:${HOME}/bin"; };
+
+02 -> export github_secrets="github-secrets.py" ;
+03 -> wget --quiet --output-document=${HOME}/bin/github-secrets.py https://raw.githubusercontent.com/emvaldes/manage-profiles/master/github-secrets.py ;
+04 -> chmod 0754 ${HOME}/bin/github-secrets.py ;
+05 -> ls -al ${HOME}/bin/github-secrets.py ;
+
+06 -> alias python='python3' ;
+07 -> python --version ;
+08 -> pip --version ;
+
+09 -> pip install virtualenv ;
+10 -> export PATH="${PATH}:${HOME}/Library/Python/2.7/bin" ;
+
+11 -> mkdir -p /tmp/.virtualenv ;
+12 -> virtualenv /tmp/.virtualenv/python3 ;
+13 -> source /tmp/.virtualenv/python3/bin/activate ;
+
+14 -> python --version ;
+15 -> python -m pip install pynacl ;
+
+16 -> source ${HOME}/bin/manage-profiles.shell ;
+17 -> manage-profiles $(cat ${HOME}/.github.token) ;
+
+
+$ ! [[ $(echo ${PATH} | egrep ${HOME}/bin) ]] && { mkdir -p ${HOME}/bin; export PATH="${PATH}:${HOME}/bin"; };
+
+$ export github_secrets="github-secrets.py" ;
+$ wget --quiet --output-document=${HOME}/bin/github-secrets.py https://raw.githubusercontent.com/emvaldes/manage-profiles/master/github-secrets.py ;
+$ chmod 0754 ${HOME}/bin/github-secrets.py ;
+$ ls -al ${HOME}/bin/github-secrets.py ;
+-rwxr-xr--  1 emvaldes  staff  1131 Sep  8 14:50 /Users/emvaldes/bin/github-secrets.py
+
+$ alias python='python3' ;
+$ python --version ;
+Python 3.8.1
+$ pip --version ;
+pip 20.0.2 from /Library/Python/2.7/site-packages/pip-20.0.2-py2.7.egg/pip (python 2.7)
+
+$ pip install virtualenv ;
+DEPRECATION: Python 2.7 reached the end of its life on January 1st, 2020. Please upgrade your Python as Python 2.7 is no longer maintained. A future version of pip will drop support for Python 2.7. More details about Python 2 support in pip, can be found at https://pip.pypa.io/en/latest/development/release-process/#python-2-support
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: virtualenv in ./Library/Python/2.7/lib/python/site-packages (20.0.31)
+Requirement already satisfied: importlib-metadata<2,>=0.12; python_version < "3.8" in /Library/Python/2.7/site-packages (from virtualenv) (1.7.0)
+Requirement already satisfied: pathlib2<3,>=2.3.3; python_version < "3.4" and sys_platform != "win32" in /Library/Python/2.7/site-packages (from virtualenv) (2.3.5)
+Requirement already satisfied: distlib<1,>=0.3.1 in /Library/Python/2.7/site-packages (from virtualenv) (0.3.1)
+Requirement already satisfied: filelock<4,>=3.0.0 in /Library/Python/2.7/site-packages (from virtualenv) (3.0.12)
+Requirement already satisfied: appdirs<2,>=1.4.3 in /Library/Python/2.7/site-packages (from virtualenv) (1.4.4)
+Requirement already satisfied: importlib-resources>=1.0; python_version < "3.7" in /Library/Python/2.7/site-packages (from virtualenv) (3.0.0)
+Requirement already satisfied: six<2,>=1.9.0 in /System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python (from virtualenv) (1.12.0)
+Requirement already satisfied: configparser>=3.5; python_version < "3" in /Library/Python/2.7/site-packages (from importlib-metadata<2,>=0.12; python_version < "3.8"->virtualenv) (4.0.2)
+Requirement already satisfied: zipp>=0.5 in /Library/Python/2.7/site-packages (from importlib-metadata<2,>=0.12; python_version < "3.8"->virtualenv) (1.2.0)
+Requirement already satisfied: contextlib2; python_version < "3" in /Library/Python/2.7/site-packages (from importlib-metadata<2,>=0.12; python_version < "3.8"->virtualenv) (0.6.0.post1)
+Requirement already satisfied: scandir; python_version < "3.5" in /Library/Python/2.7/site-packages (from pathlib2<3,>=2.3.3; python_version < "3.4" and sys_platform != "win32"->virtualenv) (1.10.0)
+Requirement already satisfied: typing; python_version < "3.5" in /Library/Python/2.7/site-packages (from importlib-resources>=1.0; python_version < "3.7"->virtualenv) (3.7.4.3)
+Requirement already satisfied: singledispatch; python_version < "3.4" in /Library/Python/2.7/site-packages (from importlib-resources>=1.0; python_version < "3.7"->virtualenv) (3.4.0.3)
+$ export PATH="${PATH}:${HOME}/Library/Python/2.7/bin" ;
+
+$ mkdir -p /tmp/.virtualenv ;
+$ virtualenv /tmp/.virtualenv/python3 ;
+created virtual environment CPython2.7.16.final.0-64 in 422ms
+  creator CPython2macOsFramework(dest=/private/tmp/.virtualenv/python3, clear=False, global=False)
+  seeder FromAppData(download=False, pip=bundle, wheel=bundle, setuptools=bundle, via=copy, app_data_dir=/Users/emvaldes/Library/Application Support/virtualenv)
+    added seed packages: pip==20.2.2, setuptools==44.1.1, wheel==0.35.1
+  activators PythonActivator,CShellActivator,FishActivator,PowerShellActivator,BashActivator
+$ source /tmp/.virtualenv/python3/bin/activate ;
+
+(python3) $ python --version ;
+Python 3.8.1
+(python3) $ python -m pip install pynacl ;
+Requirement already satisfied: pynacl in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (1.4.0)
+Requirement already satisfied: six in ./Library/Python/3.8/lib/python/site-packages (from pynacl) (1.14.0)
+Requirement already satisfied: cffi>=1.4.1 in ./Library/Python/3.8/lib/python/site-packages (from pynacl) (1.13.2)
+Requirement already satisfied: pycparser in ./Library/Python/3.8/lib/python/site-packages (from cffi>=1.4.1->pynacl) (2.19)
+
+
+(python3) $ source ${HOME}/bin/manage-profiles.shell ;
+(python3) $ manage-profiles $(cat ${HOME}/.github.token) ;
+
+Python 3.8.1
+
+Source: /tmp/import--aaNZ0k8b6E4u9sqlyrmt0Ez9vMIQpSC0/source--HRyWtRtTityTQktSUi3e04HZO5hE9kw7.functions
+Source: /tmp/import--aaNZ0k8b6E4u9sqlyrmt0Ez9vMIQpSC0/source--HRyWtRtTityTQktSUi3e04HZO5hE9kw7.variables
+Source: /tmp/import--aaNZ0k8b6E4u9sqlyrmt0Ez9vMIQpSC0/source--UuwEsnVXPngUis68DYKUBt8RCYzuixt8.functions
+Source: /tmp/import--aaNZ0k8b6E4u9sqlyrmt0Ez9vMIQpSC0/source--UuwEsnVXPngUis68DYKUBt8RCYzuixt8.variables
+Source: /tmp/import--aaNZ0k8b6E4u9sqlyrmt0Ez9vMIQpSC0/source--LhXnbgZczIVpfnoiWWqTmzs6H3NA1X3z.functions
+Source: /tmp/import--aaNZ0k8b6E4u9sqlyrmt0Ez9vMIQpSC0/source--LhXnbgZczIVpfnoiWWqTmzs6H3NA1X3z.variables
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  AWS_ACCESS_KEY_ID
+GitHub Secret (encrypted): sHEl7Yw9kIF8A5NaedDEFysRWdDkvX00+/uDmQQxvj6l3T41CNnbghDJxb6Ii3znq694K5WjHXdi3ePDXhPus6JE7SQ=
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  AWS_DEFAULT_ACCOUNT
+GitHub Secret (encrypted): l/Qytej5sKHNzJHMyOClEd6NtUOSy7p5raYB+y3Wbj+oRYpbZZz1FI/5PXnBL/d9/W2DEtgYsnYxw/j7
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  AWS_DEFAULT_PROFILE
+GitHub Secret (encrypted): TqA60TOIDcQLql2Z81k6dlMmD8dEeIuKxnqcJuK8ZxTj0yABEmzYcZBKyA3cOOC+vjDFnMjBRQ==
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  AWS_DEFAULT_REGION
+GitHub Secret (encrypted): u3JYsyjRwrTN6rJMv7COML4eEnV5ta7BrUdwvR6gRT0pqbxf35Jeuj/95hp8T7UM/PkM8BxzK+6R
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  AWS_SECRET_ACCESS_KEY
+GitHub Secret (encrypted): nbudwlUudYNE1BV7L2HQkQWo63IFkW1JEqyT32zdfDAe4yWgJaIyMRrLO/L+ansDJ5sc3vpgQQVQb83IVEgrwhxvUWxvB+Vb5zNZYwYhLS0lgm7TuA5l1Q==
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  DEPLOY_TERRAFORM
+GitHub Secret (encrypted): Z9z0khaEV48L9jZyQBf6XMcyj+QmIWQmjBTXS4a/O0I+Jc9s51n436JeHCz7EeqHx7BKLg==
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  DESTROY_TERRAFORM
+GitHub Secret (encrypted): gWrcWH0kmXFNaP9Mf9O3elxxN7aY6YoePqeKOkycujJQ/39pb3/2JduIGtBq2ZzPlOLqdg==
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  DEVOPS_ASSUMEROLE_POLICY
+GitHub Secret (encrypted): yqpZscb9/6MuhYU8/ZljqRiFJZxZcw4TOzj6/3Hs7QZdrH5BYssl4yLq48rve3D2/0c5t70a1N4cRiOgaSClwZd11OBdjTxeqkU=
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  DEVOPS_BOUNDARIES_POLICY
+GitHub Secret (encrypted): pzvB4P6brUKPfI96bcmmqjYPuywTBan9OIUDynKFXlgPH48Y4R3iqFn13FMR/+VH1q546QrGaBC/XdjKOBWWzzIEgQLMCKbThGgp4GrC5q2K35Ri
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  DEVOPS_ACCESS_POLICY
+GitHub Secret (encrypted): NoBnddL0HT0kYrHNeE3V76exu5UGZQvcbOGAFjlYZBfzjhPrOBKJh+P19JAIMplirudDG7uoYCmFBoSMoGA6YtCJoMWALBjJFDejxQ==
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  DEVOPS_ACCESS_ROLE
+GitHub Secret (encrypted): 465289KbTYt0dkjIjkA8tp3P9sCUzSJ9A/R7j2Fpa1TSI34y6YQ1ybjax0aIjX8b3+z3qpEf7q7HipNcgwty8EeQmCo7kVI9uF8=
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  DEVOPS_ACCOUNT_NAME
+GitHub Secret (encrypted): LjyiPB7tOJkeugjCYwkq0zB/Mmp6BNMfluNDPkNZC056V5GPNue1eJ380BKTOrwv8sn8y4uQ
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  INSPECT_DEPLOYMENT
+GitHub Secret (encrypted): OYvcQ12M25m4hhWXxLSbGgZYiGE/aEXg1SjTrYAyoFsebYgnfN9S5aviD0iM3GDzhSsIWA==
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  PRIVATE_KEYPAIR_FILE
+GitHub Secret (encrypted): 2TM6a5gBo0Cq/i3MzJf612mlH9c4QDDzZINNjRk8HCIlSMXPrlIgGtEAmTLVK7DMcNrGlcuXLeIRFz0=
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  PRIVATE_KEYPAIR_NAME
+GitHub Secret (encrypted): Xd4V7/wMI+qDGI2QmeWDWsTrvvZni6l35Ky6Y81to1jdJiY5TmaRmros0i08suxPNozLNDCP
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  PRIVATE_KEYPAIR_SECRET
+GitHub Secret (encrypted): f5+GBbT7B/SgtJ79QJl6070n9oK2iqdotV4tMNXdQDS7kIKqeEL+YzPShwkD2oET6Q==
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  PROVISION_TERRAFORM
+GitHub Secret (encrypted): fVIFjev9Vbx+xq8lIjKJI7sxBPlrc+L5ftGOL2GJi0Lj8xdZBR9hKyqOktx7Q0tcnRR9zg==
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  UPDATE_PYTHON_LATEST
+GitHub Secret (encrypted): S1iyDXo4S5k5Gf9WitIa8XTRKskYfA27lMzlqqF0ImvFK/CdMTraz1zoqiK9NZ9JYj4C3g==
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  UPDATE_SYSTEM_LATEST
+GitHub Secret (encrypted): t0BF3DkijBzCmyOPzvcvY+9E5OiuZ5EDumNvDvgegSqoTcmOpzrid+c+XlY4TZuwOHBlag==
+
+Creating GitHub Secret: ...
+
+DevOps GitHub User:  emvaldes
+DevOps GitHub Repo:  manage-profiles
+GitHub RESTAPI App:  application/vnd.github.v3+json
+GitHub Secret Name:  PRIVATE_KEYPAIR_SECRET
+GitHub Secret (encrypted): 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
+
+Creating GitHub Secret: ...
+
+Access Policy: 'DevOps--Custom-Access.Policy'
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "StmtAutoScaling",
+      "Effect": "Allow",
+      "Action": "autoscaling:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtCloudFront",
+      "Effect": "Allow",
+      "Action": "cloudfront:CreateInvalidation",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtCloudWatch",
+      "Effect": "Allow",
+      "Action": "cloudwatch:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtDynamoDB",
+      "Effect": "Allow",
+      "Action": "dynamodb:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtELB",
+      "Effect": "Allow",
+      "Action": "elasticloadbalancing:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtEC2",
+      "Effect": "Allow",
+      "Action": "ec2:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtIAM",
+      "Effect": "Allow",
+      "Action": "iam:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtS3",
+      "Effect": "Allow",
+      "Action": "s3:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtSTS",
+      "Effect": "Allow",
+      "Action": "sts:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtRoute53",
+      "Effect": "Allow",
+      "Action": [
+        "route53:ChangeResourceRecordSets",
+        "route53:GetHostedZone",
+        "route53:GetChange",
+        "route53:ListResourceRecordSets"
+      ],
+      "Resource": [
+        "arn:aws:route53:::hostedzone/*",
+        "arn:aws:route53:::change/*"
+      ]
+    }
+  ]
+}
+
+Creating IAM Policy ['DevOps--Custom-Access.Policy']
+
+{
+    "Policy": {
+        "PolicyName": "DevOps--Custom-Access.Policy",
+        "PolicyId": "ANPA2N4P2YIKLUZG4LBP2",
+        "Arn": "arn:aws:iam::123456789012:policy/DevOps--Custom-Access.Policy",
+        "Path": "/",
+        "DefaultVersionId": "v1",
+        "AttachmentCount": 0,
+        "PermissionsBoundaryUsageCount": 0,
+        "IsAttachable": true,
+        "CreateDate": "2020-09-08T21:58:03+00:00",
+        "UpdateDate": "2020-09-08T21:58:03+00:00"
+    }
+}
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iam:*",
+        "organizations:DescribeAccount",
+        "organizations:DescribeOrganization",
+        "organizations:DescribeOrganizationalUnit",
+        "organizations:DescribePolicy",
+        "organizations:ListChildren",
+        "organizations:ListParents",
+        "organizations:ListPoliciesForTarget",
+        "organizations:ListRoots",
+        "organizations:ListPolicies",
+        "organizations:ListTargetsForPolicy"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtAutoScaling",
+      "Effect": "Allow",
+      "Action": "autoscaling:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtCloudFront",
+      "Effect": "Allow",
+      "Action": "cloudfront:CreateInvalidation",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtCloudWatch",
+      "Effect": "Allow",
+      "Action": "cloudwatch:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtDynamoDB",
+      "Effect": "Allow",
+      "Action": "dynamodb:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtEC2",
+      "Action": "ec2:*",
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtELB",
+      "Effect": "Allow",
+      "Action": "elasticloadbalancing:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtIAM",
+      "Effect": "Allow",
+      "Action": "iam:CreateServiceLinkedRole",
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "iam:AWSServiceName": [
+            "autoscaling.amazonaws.com",
+            "ec2scheduled.amazonaws.com",
+            "elasticloadbalancing.amazonaws.com",
+            "spot.amazonaws.com",
+            "spotfleet.amazonaws.com",
+            "sts.amazonaws.com",
+            "transitgateway.amazonaws.com"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "StmtS3",
+      "Effect": "Allow",
+      "Action": "s3:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtSTS",
+      "Effect": "Allow",
+      "Action": "sts:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "StmtRoute53",
+      "Effect": "Allow",
+      "Action": [
+        "route53:ChangeResourceRecordSets",
+        "route53:GetHostedZone",
+        "route53:GetChange",
+        "route53:ListResourceRecordSets"
+      ],
+      "Resource": [
+        "arn:aws:route53:::hostedzone/*",
+        "arn:aws:route53:::change/*"
+      ]
+    }
+  ]
+}
+
+Creating IAM Boundary Policy ['Devops--Permission-Boundaries.Policy']
+
+{
+    "Policy": {
+        "PolicyName": "Devops--Permission-Boundaries.Policy",
+        "PolicyId": "ANPA2N4P2YIKLMTPSWUP6",
+        "Arn": "arn:aws:iam::123456789012:policy/Devops--Permission-Boundaries.Policy",
+        "Path": "/",
+        "DefaultVersionId": "v1",
+        "AttachmentCount": 0,
+        "PermissionsBoundaryUsageCount": 0,
+        "IsAttachable": true,
+        "CreateDate": "2020-09-08T21:58:07+00:00",
+        "UpdateDate": "2020-09-08T21:58:07+00:00"
+    }
+}
+
+Creating IAM Group ['devops']
+
+{
+    "Group": {
+        "Path": "/",
+        "GroupName": "devops",
+        "GroupId": "AGPA2N4P2YIKB32CGJAEG",
+        "Arn": "arn:aws:iam::123456789012:group/devops",
+        "CreateDate": "2020-09-08T21:58:10+00:00"
+    }
+}
+
+Creating IAM Service-Account ['devops']
+
+{
+    "User": {
+        "Path": "/",
+        "UserName": "devops",
+        "UserId": "AIDA2N4P2YIKCZX3RY33Y",
+        "Arn": "arn:aws:iam::123456789012:user/devops",
+        "CreateDate": "2020-09-08T21:58:13+00:00"
+    }
+}
+
+Creating IAM Access-Keys: ['devops']
+
+
+Displaying auto-generated credentials:
+
+[anonymous-devops]
+aws_access_key_id = ***
+aws_secret_access_key = ***
+aws_session_token = ***
+x_principal_arn = arn:aws:iam::123456789012:user/devops
+x_security_token_expires =
+
+
+Attaching IAM Service-Account ['devops'] into IAM Group ['devops']
+
+Listing IAM Groups & Users:
+
+{
+  "Users": [
+    {
+      "Path": "/",
+      "UserName": "devops",
+      "UserId": "AIDA2N4P2YIKCZX3RY33Y",
+      "Arn": "arn:aws:iam::123456789012:user/devops",
+      "CreateDate": "2020-09-08T21:58:13+00:00"
+    }
+  ],
+  "Group": {
+    "Path": "/",
+    "GroupName": "devops",
+    "GroupId": "AGPA2N4P2YIKB32CGJAEG",
+    "Arn": "arn:aws:iam::123456789012:group/devops",
+    "CreateDate": "2020-09-08T21:58:10+00:00"
+  }
+}
+
+Creating IAM Role ['DevOps--Custom-Access.Role']
+
+{
+    "Role": {
+        "Path": "/",
+        "RoleName": "DevOps--Custom-Access.Role",
+        "RoleId": "AROA2N4P2YIKCRCB5J7BW",
+        "Arn": "arn:aws:iam::123456789012:role/DevOps--Custom-Access.Role",
+        "CreateDate": "2020-09-08T21:58:21+00:00",
+        "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Principal": {
+                        "AWS": [
+                            "arn:aws:iam::123456789012:user/devops"
+                        ]
+                    },
+                    "Action": [
+                        "sts:AssumeRole"
+                    ]
+                }
+            ]
+        }
+    }
+}
+
+Attaching IAM Role ['DevOps--Custom-Access.Policy']
+
+Listing IAM Role ['DevOps--Custom-Access.Role']:
+
+{
+  "Role": {
+    "Path": "/",
+    "RoleName": "DevOps--Custom-Access.Role",
+    "RoleId": "AROA2N4P2YIKCRCB5J7BW",
+    "Arn": "arn:aws:iam::123456789012:role/DevOps--Custom-Access.Role",
+    "CreateDate": "2020-09-08T21:58:21+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::123456789012:user/devops"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "DevOps Infrastructure Deployment - Automation Services.",
+    "MaxSessionDuration": 3600,
+    "RoleLastUsed": {}
+  }
+}
+
+Attached IAM Role Policy ['DevOps--Custom-Access.Role']:
+
+{
+  "AttachedPolicies": [
+    {
+      "PolicyName": "DevOps--Custom-Access.Policy",
+      "PolicyArn": "arn:aws:iam::123456789012:policy/DevOps--Custom-Access.Policy"
+    }
+  ]
+}
+
+Assigning IAM Permission Boundary ['DevOps--Custom-Access.Role'] ...
+
+Creating IAM Policy ['DevOps--Assume-Role.Policy']
+
+{
+    "Policy": {
+        "PolicyName": "DevOps--Assume-Role.Policy",
+        "PolicyId": "ANPA2N4P2YIKNAVHW3FP6",
+        "Arn": "arn:aws:iam::123456789012:policy/DevOps--Assume-Role.Policy",
+        "Path": "/",
+        "DefaultVersionId": "v1",
+        "AttachmentCount": 0,
+        "PermissionsBoundaryUsageCount": 0,
+        "IsAttachable": true,
+        "CreateDate": "2020-09-08T21:58:31+00:00",
+        "UpdateDate": "2020-09-08T21:58:31+00:00"
+    }
+}
+
+Creating IAM Policy ['DevOps--Assume-Role.Policy']
+
+{
+  "AttachedPolicies": [
+    {
+      "PolicyName": "DevOps--Assume-Role.Policy",
+      "PolicyArn": "arn:aws:iam::123456789012:policy/DevOps--Assume-Role.Policy"
+    }
+  ]
+}
+
+-rw-r--r--  1 emvaldes  staff  230 Sep  8 14:58 /Users/emvaldes/.aws/access/123456789012/anonymous-devops.credentials
+
+[anonymous-devops]
+aws_access_key_id = ASIA2N4P2YIKJJX4N4WQ
+aws_secret_access_key = XI4tiZJi4VUyBacS4admmhhUPrs99GqpzjSdP6hm
+aws_session_token = IQoJb3JpZ2luX2VjEC4aCXVzLWVhc3QtMSJGMEQCIC0m8gtWke29ZSFo2EH3U+uZH5k/JKibAWjRe75o3pXhAiBQJaQG8LS8Rgdm/qIckByVQa2QMNZnhbL6kdqpu+EZKiqtAgg3EAEaDDcxNzAyNDMxMzg3NiIMyyRYcWFNx8UBdFYsKooC4bXpaD3axPnO+RWRck2WAkAA3Zpie9mKMUAhxMgT9bPgSFpzv3C3Y6t/qXErdkHZIlGvKQC6oPCaXTZ0TqRMnAR19lmbqFCV1swZfK+hmmZl9gY/FqnMkcMcVBGKn4TIZMo80R5La5lpFk8YV+UNCu6h9dYEP/2TFPJgbAto2cuMP31p3xBDcFZ924772n0sKk7LYE/uKP+8jSl9lclv9tHdXjlVx1RnJOb9htADWsDRvy+NalahwHTofm0ip/K/sK3bWI9FOihJ84HmOJqszd0fvII9ksBul+6UhZp3USyskwkFktWg/UUVCRS6tyFGYxN389b0iZMYgEUiMQtSNM0xexPqUrCDDSUwjv3f+gU6ngEnXX7uUKoAGGPka7+iw5xDxmY8WQscliyVJOX9TQmZtN73UhKCt5remI82hQMwXRmSsA+UKKfBuRj3H5wRAoKhtXS3WbYB3rzzh3XwqmfnllPwI6TTtiBB+3Ur4BxE+W8dscPaiz5kXFzrKQpOOthahwjiZRuASnrWjE9otu5RiWyJI74Bf6zQYapA71NSJaYpt99q8z23PIc0cyeQpA==
+x_principal_arn = arn:aws:iam::123456789012:user/devops
+x_security_token_expires = 2020-09-08T22:58:38+00:00
+
+{
+    "UserId": "AROA2N4P2YIKCRCB5J7BW:TerraformPipeline-20200908145836",
+    "Account": "123456789012",
+    "Arn": "arn:aws:sts::123456789012:assumed-role/DevOps--Custom-Access.Role/TerraformPipeline-20200908145836"
+}
+
+Token Expires: 2020-09-08 22:58:38 [1599605918]
+ Current Date: 2020-09-08 21:58:39 [1599602319]
+
+The Assumed-Role Session has 59 minutes remaining until it expires.
+
+
+Deploying Key-Pair [devops]: /Users/emvaldes/.ssh/domains/anonymous/public/anonymous.pub -> us-east-1
+
+Deploying Key-Pair [devops]: /Users/emvaldes/.ssh/domains/anonymous/public/anonymous.pub -> us-east-2
+
+Deploying Key-Pair [devops]: /Users/emvaldes/.ssh/domains/anonymous/public/anonymous.pub -> us-west-1
+
+Deploying Key-Pair [devops]: /Users/emvaldes/.ssh/domains/anonymous/public/anonymous.pub -> us-west-2
+
+
+Configuring AWS S3 Bucket ['terraform--states--123456789012'] Access Control List (ACL)
+
+Fetching AWS S3 Bucket ['terraform--states--123456789012'] Access Control List (ACL)
+
+{
+  "Owner": {
+    "DisplayName": "anonymous",
+    "ID": "c7704c0502cb4ffae2240fd22526ac4430f3bf6097b92248f4e9e79b76242cc1"
+  },
+  "Grants": [
+    {
+      "Grantee": {
+        "DisplayName": "anonymous",
+        "ID": "c7704c0502cb4ffae2240fd22526ac4430f3bf6097b92248f4e9e79b76242cc1",
+        "Type": "CanonicalUser"
+      },
+      "Permission": "FULL_CONTROL"
+    }
+  ]
+}
+
+Configuring AWS S3 Bucket ['terraform--states--123456789012'] Log-Delivery
+
+Fetching AWS S3 Bucket ['terraform--states--123456789012'] Log-Delivery
+
+{
+  "Owner": {
+    "DisplayName": "anonymous",
+    "ID": "c7704c0502cb4ffae2240fd22526ac4430f3bf6097b92248f4e9e79b76242cc1"
+  },
+  "Grants": [
+    {
+      "Grantee": {
+        "Type": "Group",
+        "URI": "http://acs.amazonaws.com/groups/s3/LogDelivery"
+      },
+      "Permission": "WRITE"
+    },
+    {
+      "Grantee": {
+        "Type": "Group",
+        "URI": "http://acs.amazonaws.com/groups/s3/LogDelivery"
+      },
+      "Permission": "READ_ACP"
+    }
+  ]
+}
+
+Configuring IAM Policy ['DevOps--S3Bucket-Logging.Policy']
+
+{
+  "TargetPrefix": "logs/",
+  "TargetBucket": "terraform--states--123456789012"
+}
+
+Configuring AWS S3 Bucket ['terraform--states--123456789012'] Versioning
+
+Fetching AWS S3 Bucket ['terraform--states--123456789012'] Versioning
+
+{
+  "Status": "Enabled"
+}
+
+Creating IAM Policy ['DevOps--S3Bucket-Principal.Policy']
+
+{
+  "Version": "2012-10-17",
+  "Id": "PolicyS3Bucket",
+  "Statement": [
+    {
+      "Sid": "StmtS3Bucket",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::123456789012:user/devops"
+      },
+      "Action": "s3:*",
+      "Resource": "arn:aws:s3:::terraform--states--123456789012/*"
+    }
+  ]
+}
+
+Completed!
+
+(python3)$

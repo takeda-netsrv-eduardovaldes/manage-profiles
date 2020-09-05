@@ -1,0 +1,78 @@
+name: Manage Profiles
+description: Manage Profiles
+
+####----------------------------------------------------------------------------
+inputs:
+  github-personal-token:
+    description: 'GitHub Personal Token'
+    required: false
+    default: false
+  organization-admin:
+    description: 'Organization Administrator'
+    required: false
+    default: false
+  organization-name:
+    description: 'Organization Name/ID'
+    required: false
+    default: false
+  service-account-group:
+    description: 'Service Account Group'
+    required: false
+    default: false
+  service-account-user:
+    description: 'Service Account User'
+    required: false
+    default: false
+####----------------------------------------------------------------------------
+# outputs:
+#   github-personal-token:
+#     description: 'GitHub Personal Token'
+#     value: ${{ steps.github-personal-token.outputs.github-personal-token }}
+#   organization-admin:
+#     description: 'Organization Administrator'
+#     value: ${{ steps.organization-admin.outputs.organization-admin }}
+#   organization-name:
+#     description: 'Organization Name/ID'
+#     value: ${{ steps.organization-name.outputs.organization-name }}
+#   service-account-group:
+#     description: 'Service Account Group'
+#     value: ${{ steps.service-account-group.outputs.service-account-group }}
+#   service-account-user:
+#     description: 'Service Account User'
+#     value: ${{ steps.service-account-user.outputs.service-account-user }}
+####----------------------------------------------------------------------------
+runs:
+  using: "composite"
+  steps:
+    ####------------------------------------------------------------------------
+    ## Resource Access KeyPair
+    - name: Manage Profiles
+      id: manage-profiles
+      shell: bash
+      run: |
+        ####--------------------------------------------------------------------
+        github_usercontent="https://raw.githubusercontent.com/emvaldes";
+        ####--------------------------------------------------------------------
+        mkdir -p ${HOME}/bin ;
+        export PATH="${PATH}:${HOME}/bin" ;
+        export PATH="${PATH}:${HOME}/Library/Python/2.7/bin" ;
+        ####--------------------------------------------------------------------
+        wget --quiet --output-document=\${HOME}/bin/manage-profiles.shell ${github_usercontent}/devops-tools/master/manage-profiles.shell ;
+        chmod 0754 ${HOME}/bin/manage-profiles.shell ;
+        ####--------------------------------------------------------------------
+        export github_secrets="github-secrets.py" ;
+        wget --quiet --output-document=\${HOME}/bin/github-secrets.py ${github_usercontent}/manage-profiles/master/${github_secrets} ;
+        chmod 0754 ${HOME}/bin/${github_secrets} ;
+        ls -al \${HOME}/bin/${github_secrets} ;
+        ####--------------------------------------------------------------------
+        python --version ;
+        pip --version ;
+        ####--------------------------------------------------------------------
+        python -m pip install pynacl ;
+        ####--------------------------------------------------------------------
+        ## echo "::set-output name=github-personal-token::${github_personal_token}" ;
+        ####--------------------------------------------------------------------
+        ## echo "::set-env name=GITHUB_PERSONAL_TOKEN::${github_personal_token}" ;
+        ####--------------------------------------------------------------------
+        echo -e "\nCompleted! " ;
+        ####--------------------------------------------------------------------

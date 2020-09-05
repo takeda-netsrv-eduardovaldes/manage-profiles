@@ -1,0 +1,59 @@
+{
+  "shaindex": {
+    "S": "{{ console.Repo_SHAIndex }}"
+  },
+  "repository": {
+    "S": "{{ console.Repository }}"
+  },
+  "datetime": {
+    "S": "{{ console.Date_Time }}"
+  },
+  "location": {
+    "S": "{{ console.Restore_Location }}"
+  },
+  "configs": {
+    "L": [
+      {
+        "S": "{{ console.Custom_Configs }}"
+      }
+    ]
+  },
+  "environment": {
+    "M": {
+      "description": {
+        "S": "{{ console.Target_LongID }}"
+      },
+      "target": {
+        "S": "{{ console.Target_ShortID }}"
+      }
+    }
+  },
+  "identity": {
+    "M": {
+      "access": {
+        "S": "{{ console.Identity_Access }}"
+      },
+      "account": {
+        "S": "{{ console.Identity_Account }}"
+      },
+      "profile": {
+        "S": "{{ console.Identity_Profile }}"
+      },
+      "userid": {
+        "S": "{{ console.Identity_UserID }}"
+      }
+    }
+  },
+  "outputs": {
+    "L": [
+    ]
+  },
+  "pipeline": {
+    "S": "{{ console.Source_Pipeline }}"
+  },
+  "variables": {
+    "L": [
+      {{ console.Custom_Variables }}
+    ]
+  }
+}

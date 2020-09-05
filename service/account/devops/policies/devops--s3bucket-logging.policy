@@ -1,0 +1,22 @@
+{
+  "LoggingEnabled": {
+    "TargetBucket": "{{ console.S3Bucket_Name }}",
+    "TargetPrefix": "logs/",
+    "TargetGrants": [
+      {
+        "Grantee": {
+          "Type": "AmazonCustomerByEmail",
+          "EmailAddress": "{{ console.Account_Email }}"
+        },
+        "Permission": "FULL_CONTROL"
+      },
+      {
+        "Grantee": {
+          "Type": "Group",
+          "URI": "http://acs.amazonaws.com/groups/global/AllUsers"
+        },
+        "Permission": "READ"
+      }
+    ]
+  }
+}
